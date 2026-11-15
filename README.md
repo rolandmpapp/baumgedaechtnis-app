@@ -58,3 +58,9 @@ Unter **Üben** (Direktlink: `#ueben`) stehen alle 100 Symbolkarten, zehn Farbka
 - Leicht: eine neue Karte nach vier Tagen, danach längere Abstände als bei Gut.
 
 Das vereinfachte Modell ist von [SM-2](https://super-memory.org/archive/english/ol/sm2.htm) inspiriert und ergänzt kurze Lernstufen. Es ist kein FSRS-Modell. Die Bewertungen zeigen den jeweiligen nächsten Abstand. Termine beruhen auf der Gerätezeit. Geänderte Karten beginnen erneut; reine Notizänderungen behalten ihren Lernstand. „Alle Karten frei üben“ zeigt auch noch nicht fällige Karten, ohne Termine zu ändern. Lernstände sind in Sicherungen enthalten und werden nicht an einen Server übertragen.
+
+## Kompakte Ansicht und Merkbilder
+
+Während einer Lernrunde bleiben Antwort und Bewertungstasten im sichtbaren Bereich. Lange Merkszenen lassen sich bei Bedarf aufklappen. Die Üben-Seite zeigt nur Kartenwahl, Lernstand und Startmöglichkeiten; Erläuterungen sind eingeklappt. Der kleine Speicherstatus steht auf den übrigen Seiten unter dem App-Namen.
+
+Die 100 Merkbilder sind eigenständige, einfarbige SVG-Zeichnungen. Gegenstände wie Hocker mit drei Beinen, Kissen, Toaster und Rasenmäher besitzen passende Darstellungen. Bildverbesserungen allein setzen vorhandene Wiederholungstermine nicht zurück.

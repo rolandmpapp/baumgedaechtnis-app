@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { buildStudyCards, scheduleReview, type Rating } from './repetition.ts';
+import { buildStudyCards, sameCardContent, scheduleReview, type Rating } from './repetition.ts';
 import { encode, cleanNumber, applyMappings } from './memory.ts';
 import { LEGACY_RULE } from './number-rules.ts';
 
@@ -111,15 +111,18 @@ export function mutateState(state: MemoryState, method: string, body: unknown, n
 // Edited or deleted questions must never inherit a stale learning schedule.
 export function pruneReviews(state:MemoryState):MemoryState {
   const mappings=applyMappings(state.mappings);
-  const versions=new Map(buildStudyCards(state.entries,mappings.symbols,mappings.colors).map(c=>[c.id,c.fingerprint]));
-  return {...state,reviews:state.reviews.filter(r=>versions.get(r.cardId)===r.fingerprint)};
+  const cards=new Map(buildStudyCards(state.entries,mappings.symbols,mappings.colors).map(c=>[c.id,c]));
+  return {...state,reviews:state.reviews.flatMap(review=>{
+    const card=cards.get(review.cardId);
+    return card&&sameCardContent(card,review.fingerprint)?[{...review,fingerprint:card.fingerprint}]:[];
+  })};
 }
 
 export function applyReview(state:MemoryState, cardId:string, fingerprint:string, rating:Rating, expectedReviews:number, now:number) {
   const mappings=applyMappings(state.mappings);
   const card=buildStudyCards(state.entries,mappings.symbols,mappings.colors).find(c=>c.id===cardId);
   if (!card || card.fingerprint!==fingerprint) throw new Error('Diese Karte wurde inzwischen geändert. Öffne die Üben-Seite erneut.');
-  const previous=state.reviews.find(r=>r.cardId===cardId && r.fingerprint===fingerprint);
+  const previous=state.reviews.find(r=>r.cardId===cardId && sameCardContent(card,r.fingerprint));
   if ((previous?.reviews??0)!==expectedReviews) throw new Error('Der Lernstand wurde in einem anderen Fenster geändert. Bitte lade ihn neu.');
   const review=scheduleReview(card,previous,rating,now);
   const next=stateSchema.parse({...state,reviews:[...state.reviews.filter(r=>r.cardId!==cardId),review]});

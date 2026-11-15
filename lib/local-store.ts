@@ -5,10 +5,10 @@ const DB_NAME = 'baumgedaechtnis-local-v1';
 let opening: Promise<IDBDatabase> | undefined;
 function database() {
   if (!opening) opening = new Promise<IDBDatabase>((resolve, reject) => {
-    const request = indexedDB.open(DB_NAME, 2);
+    const request = indexedDB.open(DB_NAME, 3);
     request.onupgradeneeded = () => {
-      // Retain the existing collection. Version 2 prevents older app tabs from
-      // stripping the new review records when they save an entry.
+      // Retain the collection and reviews. Version 3 closes older app tabs so
+      // their icon-dependent fingerprints cannot overwrite migrated reviews.
       if (!request.result.objectStoreNames.contains('memory')) request.result.createObjectStore('memory');
     };
     request.onerror = () => reject(new Error('Der Gerätespeicher konnte nicht geöffnet werden. Bitte erlaube Website-Daten in deinem Browser.'));

@@ -28,14 +28,24 @@ const MAX_INTERVAL = 3650;
 // The exact question/answer content identifies a card revision. Notes are only hints.
 export function buildStudyCards(entries:Entry[], symbols:SymbolItem[], colors:ColorItem[]):StudyCard[] {
   return [
-    ...symbols.map(symbol => ({kind:'symbols' as const, id:'s:'+symbol.n, answer:String(symbol.n), symbol, fingerprint:JSON.stringify([symbol.n,symbol.name,symbol.icon])})),
+    ...symbols.map(symbol => ({kind:'symbols' as const, id:'s:'+symbol.n, answer:String(symbol.n), symbol, fingerprint:JSON.stringify([symbol.n,symbol.name])})),
     ...colors.map(color => ({kind:'colors' as const, id:'c:'+color.n, answer:String(color.n), color, fingerprint:JSON.stringify([color.n,color.name,color.hex])})),
     ...entries.map(entry => ({kind:'collection' as const, id:'e:'+entry.id, answer:entry.number, entry, fingerprint:JSON.stringify([entry.title,entry.number,entry.encoding??LEGACY_RULE])})),
   ];
 }
+export function sameCardContent(card:StudyCard, fingerprint:string) {
+  if(card.fingerprint===fingerprint)return true;
+  if(card.kind!=='symbols')return false;
+  try {
+    const old=JSON.parse(fingerprint), current=JSON.parse(card.fingerprint);
+    // Older versions included the drawing's name. Improving that drawing must
+    // not reset a learned number/name association.
+    return Array.isArray(old)&&Array.isArray(current)&&(old.length===2||old.length===3)&&(current.length===2||current.length===3)&&old[0]===current[0]&&old[1]===current[1];
+  } catch {return false;}
+}
 export function matchingReview(card:StudyCard, reviews:Map<string,Review>):Review | undefined {
   const review=reviews.get(card.id);
-  return review?.fingerprint===card.fingerprint ? review : undefined;
+  return review&&sameCardContent(card,review.fingerprint) ? {...review,fingerprint:card.fingerprint} : undefined;
 }
 export function cardsInDeck(cards:StudyCard[], deck:Deck) {
   return deck==='all' ? cards : cards.filter(card=>card.kind===deck);
@@ -64,7 +74,7 @@ export function sessionCards(cards:StudyCard[], reviews:Map<string,Review>, now:
 // This is a simple deterministic scheduler, not FSRS or a fitted retention model.
 export function scheduleReview(card:StudyCard, previous:Review | undefined, rating:Rating, now:number):Review {
   if (!Number.isFinite(now)) throw new Error('Die Gerätezeit ist ungültig.');
-  const old=previous?.fingerprint===card.fingerprint ? previous : undefined;
+  const old=previous&&sameCardContent(card,previous.fingerprint) ? previous : undefined;
   const oldEase=old?.ease??2.5;
   let ease=oldEase, days=0, minutes=0, repetitions=old?.repetitions??0;
   const inLearning=!old || old.intervalDays===0;

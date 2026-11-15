@@ -1,7 +1,18 @@
 import { splitNumber, LEGACY_RULE, type EncodingRule } from "./number-rules.ts";
 export type SymbolItem={n:number;name:string;icon:string;group:string};
 const names='Baum|Licht|Hocker|Auto|Hand|Würfel|Zwerg|Achterbahn|Katze|Bibel|Fußball|Geist|Fahrstuhl|Herz|Ritter|Teenager|Karten|Verkehr|Abendessen|Schlafzimmer|Bett|Kissen|Decke|Nachttisch|Wecker|Buch|Vorhang|Kommode|Teddybär|Badezimmer|Badewanne|Badeente|Dusche|Seife|Handtuch|Medizinschrank|Waschbecken|Zahnbürste|Waage|Küche|Herd|Kaffeemaschine|Spülmaschine|Müll|Kühlschrank|Milch|Toaster|Teller|Besteck|Wohnzimmer|Sofa|Zeitungsständer|Gemälde|Bücherregal|TV|Sessel|Klavier|Pflanze|Teppich|Garten|Terrasse|Gartenliege|Grill|Wiese|Rasenmäher|Blumenbeet|Gartenschlauch|Schaukel|Zaun|Büro|Schreibtisch|Papier|Stift|Handy|Mac|Drucker|Papierkorb|Ordner|Rollladen|Garage|Kennzeichen|Stoßstange|Motorhaube|Scheibenwischer|Lenkrad|Hupe|Radio|Kofferraum|Reifen|GYM|Füße|Knie|Oberschenkel|Po|Bauch|Brust|Schulter|Hals|Gesicht|Haare'.split('|');
-const icons='TreePine|Lightbulb|Armchair|Car|Hand|Dice6|PersonStanding|FerrisWheel|Cat|BookOpen|Volleyball|Ghost|ArrowUpDown|Heart|Shield|PersonStanding|Club|TrafficCone|Utensils|BedDouble|Bed|Cloud|Layers|Table2|AlarmClock|BookOpen|PanelLeftClose|Archive|PawPrint|Bath|Bath|Bird|ShowerHead|Bubbles|RectangleHorizontal|Pill|WavesHorizontal|Brush|Scale|CookingPot|CookingPot|Coffee|WavesHorizontal|Trash2|Refrigerator|Milk|Sandwich|Circle|Utensils|Sofa|Sofa|Newspaper|Image|Library|Tv|Armchair|Piano|Sprout|RectangleHorizontal|Flower2|Fence|Armchair|Flame|Sprout|Scissors|Flower2|WavesHorizontal|MoveHorizontal|Fence|Briefcase|Table2|FileText|PenLine|Smartphone|Laptop|Printer|Trash2|Folder|PanelTopClose|Warehouse|RectangleEllipsis|CarFront|Car|WavesHorizontal|CircleDot|Megaphone|Radio|Luggage|CircleDot|Dumbbell|Footprints|Accessibility|PersonStanding|Accessibility|CircleUserRound|Shirt|PersonStanding|UserRound|FaceSlightlySmiling|Scissors'.split('|');
+const icons=[
+  'TreePine','Lightbulb','ThreeLeggedStool','Car','Hand','Dice6','Dwarf','RollerCoaster','Cat','Bible',
+  'Football','Ghost','Elevator','Heart','Knight','Teenager','PlayingCards','Traffic','DinnerPlate','Bedroom',
+  'Bed','Pillow','Blanket','BedsideTable','AlarmClock','BookOpen','Curtains','Dresser','TeddyBear','Bathroom',
+  'Bath','RubberDuck','ShowerHead','Soap','Towel','MedicineCabinet','Washbasin','Toothbrush','BathroomScale','Kitchen',
+  'Stove','CoffeeMachine','Dishwasher','TrashBag','Refrigerator','Milk','Toaster','Plate','Utensils','LivingRoom',
+  'Sofa','NewspaperRack','FramedPainting','Bookshelf','Tv','Armchair','Piano','PottedPlant','Rug','Garden',
+  'Patio','DeckChair','Barbecue','Meadow','LawnMower','Flowerbed','GardenHose','Swing','Fence','Office',
+  'Desk','FileText','PenLine','Smartphone','DesktopMac','Printer','WasteBasket','RingBinder','RollerShutter','Garage',
+  'LicensePlate','Bumper','CarHood','WindshieldWipers','SteeringWheel','CarHorn','RadioReceiver','CarTrunk','Tire','Dumbbell',
+  'Footprints','Knee','Thigh','Hips','Abdomen','Chest','Shoulder','Neck','FaceSlightlySmiling','Hair',
+];
 export const groups=['Baumliste','Schlafzimmer','Badezimmer','Küche','Wohnzimmer','Garten','Büro','Garage','Körper'];
 export const symbols:SymbolItem[]=names.map((name,i)=>({n:i+1,name,icon:icons[i],group:i<19?'Baumliste':groups[Math.min(8,Math.floor((i+1)/10)-1)]}));
 export type ColorItem={n:number;name:string;hex:string};

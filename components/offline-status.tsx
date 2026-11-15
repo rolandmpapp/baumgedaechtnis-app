@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-export function OfflineStatus() {
+export function OfflineStatus({showStatus=true}:{showStatus?:boolean}) {
   const [ready, setReady] = useState(false);
   const [online, setOnline] = useState(navigator.onLine);
   const [failed, setFailed] = useState(false);
@@ -37,7 +37,7 @@ export function OfflineStatus() {
     };
   }, []);
   return <div className="local-status" role="status">
-    <span>{ready ? (online ? 'Offline bereit · Lokal gespeichert' : 'Du bist offline · Lokal gespeichert') : failed ? 'Offline-Nutzung konnte nicht vorbereitet werden.' : import.meta.env.DEV ? 'Lokale Vorschau · Lokal gespeichert' : 'Offline-Nutzung wird vorbereitet …'}</span>
+    {showStatus&&<span>{ready ? (online ? 'Offline bereit · Lokal gespeichert' : 'Du bist offline · Lokal gespeichert') : failed ? 'Offline-Nutzung konnte nicht vorbereitet werden.' : import.meta.env.DEV ? 'Lokale Vorschau · Lokal gespeichert' : 'Offline-Nutzung wird vorbereitet …'}</span>}
     {update && <button className="textbutton" onClick={()=>{window.dispatchEvent(new Event('baum-update-accepted'));update.postMessage({type:'SKIP_WAITING'});}}>Neue Version laden</button>}
   </div>;
 }
