@@ -36,7 +36,7 @@ test('legacy API export accepts nullable encoding and hex', () => {
 });
 test('bad imports reject entirely before any data is written', () => {
   const state=create();
-  for (const text of ['{','{}',JSON.stringify({format:'baumgedaechtnis',version:2,data:state}),JSON.stringify({...state,entries:[{...state.entries[0],number:'abc'}]}),JSON.stringify({...state,entries:[{...state.entries[0],number:'348',encoding:{mode:'triples',useColors:false}}]}),JSON.stringify({...state,entries:[state.entries[0],state.entries[0]]}),JSON.stringify({...state,mappings:[{kind:'color',n:10,name:'Bad',hex:'#ffffff'}]}),JSON.stringify({...state,mappings:[{kind:'color',n:3,name:'Bad',hex:'red'}]}),JSON.stringify({...state,defaultRule:{mode:'custom',useColors:true,pattern:[]}}),JSON.stringify({...state,entries:[{...state.entries[0],created_at:'yesterday'}]}),' '.repeat(MAX_BACKUP_BYTES+1)]) assert.throws(()=>parseBackup(text));
+  for (const text of ['{','{}',JSON.stringify({format:'baumgedaechtnis',version:3,data:state}),JSON.stringify({...state,entries:[{...state.entries[0],number:'abc'}]}),JSON.stringify({...state,entries:[{...state.entries[0],number:'348',encoding:{mode:'triples',useColors:false}}]}),JSON.stringify({...state,entries:[state.entries[0],state.entries[0]]}),JSON.stringify({...state,mappings:[{kind:'color',n:10,name:'Bad',hex:'#ffffff'}]}),JSON.stringify({...state,mappings:[{kind:'color',n:3,name:'Bad',hex:'red'}]}),JSON.stringify({...state,defaultRule:{mode:'custom',useColors:true,pattern:[]}}),JSON.stringify({...state,entries:[{...state.entries[0],created_at:'yesterday'}]}),' '.repeat(MAX_BACKUP_BYTES+1)]) assert.throws(()=>parseBackup(text));
   assert.deepEqual(state,create());
 });
 test('invalid writes do not alter the original state', () => {

@@ -20,7 +20,7 @@ Nach der Veröffentlichung: **https://rolandmpapp.github.io/baumgedaechtnis-app/
 - Es gibt keine automatische Synchronisation zwischen Geräten. Beim Löschen von Website-Daten, bei einer Neuinstallation oder einem Gerätewechsel können lokale Daten verloren gehen. Sicherungen außerhalb der App aufbewahren.
 - Der Browser und die installierte Web-App können getrennte Speicher verwenden. Sicherungen im tatsächlich verwendeten App-Fenster erstellen und importieren.
 
-Eine Sicherung verwendet `format: baumgedaechtnis`, `version: 1` und unter `data` die Felder `entries`, `mappings` und `defaultRule`. Auch die JSON-Antwort der bisherigen App unter `/api/memory` lässt sich importieren. Alte Daten werden nicht automatisch von der anderen Webadresse übernommen. Persönliche Sicherungen niemals in dieses Repository hochladen.
+Eine Sicherung verwendet `format: baumgedaechtnis`, `version: 2` und unter `data` die Felder `entries`, `mappings`, `defaultRule` und `reviews`. Sicherungen der Version 1 bleiben importierbar und starten ohne bisherigen Lernstand. Auch die JSON-Antwort der bisherigen App unter `/api/memory` lässt sich importieren. Alte Daten werden nicht automatisch von der anderen Webadresse übernommen. Persönliche Sicherungen niemals in dieses Repository hochladen.
 
 ## Entwicklung
 
@@ -47,3 +47,14 @@ React, TypeScript, Vite und Tailwind CSS; Browser-IndexedDB für atomare lokale 
 ## Sicherheitsgrenzen
 
 Die App verwendet keine Analyse- oder Trackingdienste und lädt keine externen Skripte. Eine Content Security Policy beschränkt Ressourcen auf die eigene Herkunft. Texte aus Sicherungen werden als Text dargestellt und nicht als HTML ausgeführt. Sicherungen und lokale Daten sind nicht verschlüsselt; die App ist kein Passworttresor. Das Gerät und der Browser müssen vor fremdem Zugriff geschützt sein. GitHub-Nutzername und Repository-Adresse sind öffentlich sichtbar.
+
+## Üben mit Spaced Repetition
+
+Unter **Üben** (Direktlink: `#ueben`) stehen alle 100 Symbolkarten, zehn Farbkarten und die eigene Sammlung bereit. Fällige Wiederholungen kommen vor neuen Karten. Es gibt keine Begrenzung auf zehn Karten; Runden können jederzeit beendet werden. Jede Bewertung wird sofort lokal gespeichert.
+
+- Nochmal: nach einer Minute erneut, auch innerhalb derselben Runde.
+- Schwer: in der Lernphase nach zehn Minuten, später mit einem kurzen Abstand in Tagen.
+- Gut: eine neue Karte nach einem Tag, danach zunehmend größere Abstände.
+- Leicht: eine neue Karte nach vier Tagen, danach längere Abstände als bei Gut.
+
+Das vereinfachte Modell ist von [SM-2](https://super-memory.org/archive/english/ol/sm2.htm) inspiriert und ergänzt kurze Lernstufen. Es ist kein FSRS-Modell. Die Bewertungen zeigen den jeweiligen nächsten Abstand. Termine beruhen auf der Gerätezeit. Geänderte Karten beginnen erneut; reine Notizänderungen behalten ihren Lernstand. „Alle Karten frei üben“ zeigt auch noch nicht fällige Karten, ohne Termine zu ändern. Lernstände sind in Sicherungen enthalten und werden nicht an einen Server übertragen.

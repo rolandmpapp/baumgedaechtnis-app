@@ -56,7 +56,7 @@ export function DataBackup({onRestored, disabled}: {onRestored:()=>Promise<void>
     <AlertDialog open={!!pending} onOpenChange={open=>{if(!open && !busy)setPending(null)}}>
       <AlertDialogContent><AlertDialogHeader>
         <AlertDialogTitle>Sicherung wiederherstellen?</AlertDialogTitle>
-        <AlertDialogDescription>Die Datei enthält {pending?.entries.length ?? 0} Zahlen und {pending?.mappings.length ?? 0} persönliche Zuordnungen. Sie ersetzt deine gesamte Sammlung, Farben und Regeln auf diesem Gerät. Exportiere vorher eine Sicherung, wenn du die aktuellen Daten behalten möchtest.</AlertDialogDescription>
+        <AlertDialogDescription>Die Datei enthält {pending?.entries.length ?? 0} Zahlen und {pending?.mappings.length ?? 0} persönliche Zuordnungen sowie {pending?.reviews.length ?? 0} Lernstände. Sie ersetzt deine gesamte Sammlung, Farben, Regeln und Lernstände auf diesem Gerät. Exportiere vorher eine Sicherung, wenn du die aktuellen Daten behalten möchtest.</AlertDialogDescription>
       </AlertDialogHeader><AlertDialogFooter>
         <AlertDialogCancel disabled={busy}>Abbrechen</AlertDialogCancel>
         <AlertDialogAction disabled={busy} onClick={event=>{event.preventDefault();void restore();}}>Sammlung ersetzen</AlertDialogAction>
